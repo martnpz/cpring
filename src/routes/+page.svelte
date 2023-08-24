@@ -3,90 +3,43 @@
 </svelte:head>
 
 <script lang="ts">
+  import { onMount } from 'svelte';
+  
+  let cposts: any[] = [];
 
-  	import { onMount } from 'svelte';
-  	import type { Collection } from 'mongodb';
-  	import { connectToDatabase } from '$lib/db';
+  onMount(async () => {
+    const response = await fetch('/api/cposts');
 
-  	let data: Array<any> = [];
-
-  	onMount(async () => {
-    	const db = await connectToDatabase();
-    	const collection: Collection = db.collection('your-collection-name'); // Update with your collection name
-    	data = await collection.find().toArray();
-  	});
-
-	const posts = [
-		{
-            title: 'First post',
-            slug: 'first-post',
-			img: 'https://devox.me/backgrounds/cb66ab0d-5b35.jpeg',
-        },
-        {
-            title: 'Second post',
-            slug:'second-post',
-			img: 'https://devox.me/backgrounds/cb66ab0d-5b35.jpeg',
-        },
-		{
-            title: 'Third post',
-            slug: 'third-post',
-			img: 'https://devox.me/backgrounds/cb66ab0d-5b35.jpeg',
-        },
-		{
-            title: 'Fourth post',
-            slug: 'fourth-post',
-			img: 'https://devox.me/backgrounds/cb66ab0d-5b35.jpeg',
-        },
-		{
-			title: 'Fifth post',
-            slug: 'fifth-post',
-			img: 'https://devox.me/backgrounds/cb66ab0d-5b35.jpeg',
-		},
-		{
-			title: 'Sixth post',
-            slug:'sixth-post',
-			img: 'https://devox.me/backgrounds/cb66ab0d-5b35.jpeg',
-		},
-		{
-			title: 'Seventh post',
-            slug:'seventh-post',
-			img: 'https://devox.me/backgrounds/cb66ab0d-5b35.jpeg',
-		},
-		{
-			title: 'Eighth post',
-            slug: 'eighth-post',
-			img: 'https://devox.me/backgrounds/cb66ab0d-5b35.jpeg',
-		},
-		{
-			title: 'Ninth post',
-            slug: 'ninth-post',
-			img: 'https://devox.me/backgrounds/cb66ab0d-5b35.jpeg',
-		}
-	]
+    if (response.ok) {
+      cposts = await response.json();
+    } else {
+      console.error('Failed to fetch data');
+    }
+  });
 
 </script>
 
 <section class="categories-container">
 	<div class="categories">
-		<a href="" class="category">/a/</a>
-		<a href="" class="category">/b/</a>
-		<a href="" class="category">/c/</a>
-		<a href="" class="category">/nor/</a>
-		<a href="" class="category">/pol/</a>
-		<a href="" class="category">/uff/</a>
-		<a href="" class="category">/x/</a>
-		<a href="" class="category">/cp/</a>
-		<a href="" class="category">/mo/</a>
-		<a href="" class="category">/cul/</a>
-		<a href="" class="category">/u/</a>
+		<a href="/a" class="category">/a/</a>
+		<a href="/b" class="category">/b/</a>
+		<a href="/c" class="category">/c/</a>
+		<a href="/nor" class="category">/nor/</a>
+		<a href="/" class="category">/pol/</a>
+		<a href="/" class="category">/uff/</a>
+		<a href="/" class="category">/x/</a>
+		<a href="/" class="category">/cp/</a>
+		<a href="/" class="category">/mo/</a>
+		<a href="/" class="category">/cul/</a>
+		<a href="/" class="category">/u/</a>
 
     </div>
 	<button class="more-categories">More</button>
 </section>
 
 <section class="posts">
-	{#each data as {title, img}}
-		<a class="cpost" href="/post/post">
+	{#each cposts as {_id, title, img,}}
+		<a class="cpost" href="/post/{_id}">
 			<img src="{img}" alt="{title}">
 			<h1>{title}</h1>
 			<div class="hover-effect"></div>

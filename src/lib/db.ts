@@ -1,14 +1,14 @@
-import { Db, MongoClient } from "mongodb"
+import { MongoClient } from 'mongodb';
 
-const uri = '0.0.0.0:27017'
-const dbName = 'cpring'
+const url = 'mongodb://localhost:27017';
+const dbName = 'cpring';
 
-let client: MongoClient | undefined;
+const client = new MongoClient(url);
 
-export async function connectToDatabase(): Promise<Db> {
-  if (!client) {
-    client = new MongoClient(uri);
-    await client.connect();
-  }
-  return client.db(dbName);
+export function startMongo(): Promise<MongoClient> {
+  console.log('Starting Mongo');
+  return client.connect();
 }
+
+// Export 'db' as an object.
+export default client.db(dbName);

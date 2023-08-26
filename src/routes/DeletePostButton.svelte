@@ -1,16 +1,10 @@
 <script lang="ts">
-    import type { PageData } from "../$types";
-
-    export let data: PageData;
-
     let postId;
     let isMod: boolean = true; // Workaround for moderation.
 
     async function deleteSelectedPost(id: any) {
-        console.log("ID from frontend: " + id);
-        
         const response = await fetch('/api/delete-post', {
-            method: 'POST',
+            method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json'
             },
@@ -25,16 +19,8 @@
         }
     }
 
-
 </script>
 
-
-<div class="post">
-    <img src="{data.image}" alt="{data.title}">
-    <h1>{data.title}</h1>
-    <p>{data.body}</p>
-    
-    {#if isMod}
-        <button on:click={() => deleteSelectedPost(data.id)}>DELETE</button>
-    {/if}
-</div>
+{#if isMod}
+    <button on:click={deleteSelectedPost}>DELETE</button>
+{/if}

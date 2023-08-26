@@ -11,7 +11,7 @@ export const load = (async (urlData) => {
         id: cpostData?._id.toString(),
         title: cpostData?.title,
         body: cpostData?.body,
-        img: cpostData?.img
+        image: cpostData?.image
     };
 
     return cpost;

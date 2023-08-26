@@ -3,7 +3,7 @@
 </svelte:head>
 
 <script lang="ts">
-  import { onMount } from 'svelte';
+	import { onMount } from 'svelte';
   
   let cposts: any[] = [];
 
@@ -38,9 +38,9 @@
 </section>
 
 <section class="posts">
-	{#each cposts as {_id, title, img,}}
+	{#each cposts as {_id, title, image,}}
 		<a class="cpost" href="/post/{_id}">
-			<img src="{img}" alt="{title}">
+			<img src="{image}" alt="{title}">
 			<h1>{title}</h1>
 			<div class="hover-effect"></div>
 		</a>

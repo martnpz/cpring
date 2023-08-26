@@ -1,11 +1,13 @@
 <script>
 	import logo from '$lib/images/logo.svg';
+	import PostModalButton from './PostModalButton.svelte';
+
 </script>
 
 <header>
 	<div class="left-corner">
 		<a href="/">
-			<img src={logo} alt="cpring" width="50%"/>
+			<img src={logo} alt="cpring" width="20%"/>
 		</a>
 		<button class="account">A</button>
 	</div>
@@ -14,9 +16,7 @@
 		<input type="text" placeholder="Search...">
 	</div>
 	
-	<div class="right-corner">
-		<button class="create">Create</button>
-	</div>
+	<PostModalButton />
 </header>
 
 <style>

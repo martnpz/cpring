@@ -4,18 +4,61 @@
 
 <script lang="ts">
 	import { onMount } from 'svelte';
-  
-  let cposts: any[] = [];
+	
+	
 
-  onMount(async () => {
-    const response = await fetch('/api/cposts');
+	let cposts: any[] = [];
 
-    if (response.ok) {
-      cposts = await response.json();
-    } else {
-      console.error('Failed to fetch data');
-    }
-  });
+	// Temorarily:
+	let password: string;
+	async function createAnon() {
+		const newAnon = await fetch('/api/auth/createanon', {
+			method: 'POST',
+        	headers: {
+         	   'Content-Type': 'application/json'
+        	},
+        	body: JSON.stringify({password})
+    	});
+
+		if (newAnon.ok) {
+			console.log("anon create.");
+		} else {
+			console.log("anon create failed");
+		
+		}
+	}
+
+	let anonId: string;
+	let anonPassword: string;
+
+	async function loginAnon() {
+		const loginData = {
+			anonId,
+			anonPassword,
+		};
+
+		const existingAnon = await fetch('/api/auth/loginanon', {
+			method: 'POST',
+			headers: {'Content-Type': 'application/json'},
+			body: JSON.stringify({loginData})
+		})
+
+		if (existingAnon.ok) {
+			console.log("anon logged in at frontend");
+		}  else {
+			console.log("erro loggin anon at frontend");
+		}
+	}
+
+	onMount(async () => {
+		const response = await fetch('/api/cposts');
+
+		if (response.ok) {
+			cposts = await response.json();
+		} else {
+			console.error('Failed to fetch data');
+		}
+	});
 
 </script>
 
@@ -36,6 +79,18 @@
     </div>
 	<button class="more-categories">More</button>
 </section>
+
+<form on:submit|preventDefault={createAnon}>
+	<input type="password" bind:value={password}>
+</form>
+
+<p>Anon login</p>
+
+<form on:submit|preventDefault={loginAnon}>
+	<input type="text" bind:value={anonId}>
+	<input type="password" bind:value={anonPassword}>
+	<button type="submit">login</button>
+</form>
 
 <section class="posts">
 	{#each cposts as {_id, title, image,}}
@@ -85,19 +140,20 @@
 
 	.posts {
 		display: grid;
-		grid-template-columns: repeat(4, 1fr);
+		grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+		grid-auto-rows: 500px;
 		grid-column-gap: 2em;
 		grid-row-gap: 2em;
 	}
 
 	.cpost {
+		color: var(--color-text-0);
         border: 1px solid var(--color-border-0);
 		border-radius: 16px;
-		min-height: 10vh;
-		height: 50vh;
+		width: 100%;
+		height: 100%;
 		padding: 2%;
 		background: rgba(37, 34, 72, 0.50);
-		backdrop-filter: blur(44px);
 		cursor: pointer;
 
     }

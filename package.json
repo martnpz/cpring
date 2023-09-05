@@ -16,6 +16,7 @@
 		"@neoconfetti/svelte": "^1.0.0",
 		"@sveltejs/adapter-auto": "^2.0.0",
 		"@sveltejs/kit": "^1.20.4",
+		"@types/bcryptjs": "^2.4.3",
 		"@types/cookie": "^0.5.1",
 		"@typescript-eslint/eslint-plugin": "^5.45.0",
 		"@typescript-eslint/parser": "^5.45.0",
@@ -33,6 +34,12 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"mongodb": "^5.7.0"
+		"@types/bcrypt": "^5.0.0",
+		"bcrypt": "^5.1.1",
+		"bcryptjs": "^2.4.3",
+		"cookie": "^0.5.0",
+		"mongodb": "^5.7.0",
+		"string-hash": "^1.1.3",
+		"uuid": "^9.0.0"
 	}
 }

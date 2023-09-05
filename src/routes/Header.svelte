@@ -7,7 +7,7 @@
 <header>
 	<div class="left-corner">
 		<a href="/">
-			<img src={logo} alt="cpring" width="20%"/>
+			<img src={logo} alt="cpring" width="10%"/>
 		</a>
 		<button class="account">A</button>
 	</div>

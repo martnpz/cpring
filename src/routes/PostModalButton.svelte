@@ -15,9 +15,9 @@
 
 async function handleSubmit() {
     const formData = {
-        title,
-        body,
-        image
+      title,
+      body,
+      image
     };
 
     const response = await fetch('/api/create-post', {
@@ -28,7 +28,7 @@ async function handleSubmit() {
         body: JSON.stringify(formData)
     });
 
-	if (response.ok) {
+if (response.ok) {
 		const responseData = await response.json();
         console.log('Response from server:', responseData);
     } else {

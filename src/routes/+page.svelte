@@ -1,11 +1,5 @@
-<svelte:head>
-	<title>Home</title>
-</svelte:head>
-
 <script lang="ts">
 	import { onMount } from 'svelte';
-	
-	
 
 	let cposts: any[] = [];
 
@@ -14,17 +8,16 @@
 	async function createAnon() {
 		const newAnon = await fetch('/api/auth/createanon', {
 			method: 'POST',
-        	headers: {
-         	   'Content-Type': 'application/json'
-        	},
-        	body: JSON.stringify({password})
-    	});
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({ password })
+		});
 
 		if (newAnon.ok) {
-			console.log("anon create.");
+			console.log('anon create.');
 		} else {
-			console.log("anon create failed");
-		
+			console.log('anon create failed');
 		}
 	}
 
@@ -34,19 +27,21 @@
 	async function loginAnon() {
 		const loginData = {
 			anonId,
-			anonPassword,
+			anonPassword
 		};
 
 		const existingAnon = await fetch('/api/auth/loginanon', {
 			method: 'POST',
-			headers: {'Content-Type': 'application/json'},
-			body: JSON.stringify({loginData})
-		})
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify({ loginData })
+		});
+
+		console.log('At frontend: ' + existingAnon.status);
 
 		if (existingAnon.ok) {
-			console.log("anon logged in at frontend");
-		}  else {
-			console.log("erro loggin anon at frontend");
+			console.log('anon logged in at frontend', existingAnon);
+		} else {
+			alert('Credentials are invalid.');
 		}
 	}
 
@@ -59,8 +54,11 @@
 			console.error('Failed to fetch data');
 		}
 	});
-
 </script>
+
+<svelte:head>
+	<title>Home</title>
+</svelte:head>
 
 <section class="categories-container">
 	<div class="categories">
@@ -75,29 +73,28 @@
 		<a href="/" class="category">/mo/</a>
 		<a href="/" class="category">/cul/</a>
 		<a href="/" class="category">/u/</a>
-
-    </div>
+	</div>
 	<button class="more-categories">More</button>
 </section>
 
 <form on:submit|preventDefault={createAnon}>
-	<input type="password" bind:value={password}>
+	<input type="password" bind:value={password} />
 </form>
 
 <p>Anon login</p>
 
 <form on:submit|preventDefault={loginAnon}>
-	<input type="text" bind:value={anonId}>
-	<input type="password" bind:value={anonPassword}>
+	<input type="text" bind:value={anonId} />
+	<input type="password" bind:value={anonPassword} />
 	<button type="submit">login</button>
 </form>
 
 <section class="posts">
-	{#each cposts as {_id, title, image,}}
+	{#each cposts as { _id, title, image }}
 		<a class="cpost" href="/post/{_id}">
-			<img src="{image}" alt="{title}">
+			<img src={image} alt={title} />
 			<h1>{title}</h1>
-			<div class="hover-effect"></div>
+			<div class="hover-effect" />
 		</a>
 	{/each}
 </section>
@@ -105,36 +102,36 @@
 <style>
 	.categories-container {
 		display: flex;
-        flex-direction: row;
+		flex-direction: row;
 		margin: 2% 0 2% 0;
-	    justify-content: space-around;
+		justify-content: space-around;
 	}
 
 	.more-categories {
 		width: 50px;
 		border-radius: 16px;
 		margin-left: 2%;
- 		padding: 10px;
+		padding: 10px;
 		color: var(--color-bg-0);
 	}
 
 	.categories {
 		display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
+		flex-wrap: wrap;
+		justify-content: space-between;
 		width: 100%;
 	}
 
 	.category {
 		width: 80px;
- 		padding: 10px;
-        border: 1px solid white;
-        border-radius: 16px;
-        background-color: var(--color-border-0);
+		padding: 10px;
+		border: 1px solid white;
+		border-radius: 16px;
+		background-color: var(--color-border-0);
 		color: white;
 		font-weight: bolder;
 		font-size: 1.2em;
-        text-decoration: none;
+		text-decoration: none;
 		text-align: center;
 	}
 
@@ -148,15 +145,14 @@
 
 	.cpost {
 		color: var(--color-text-0);
-        border: 1px solid var(--color-border-0);
+		border: 1px solid var(--color-border-0);
 		border-radius: 16px;
 		width: 100%;
 		height: 100%;
 		padding: 2%;
-		background: rgba(37, 34, 72, 0.50);
+		background: rgba(37, 34, 72, 0.5);
 		cursor: pointer;
-
-    }
+	}
 
 	h1 {
 		margin: 2%;
@@ -166,12 +162,12 @@
 	.cpost img {
 		border-radius: 16px;
 		object-fit: cover;
-        width: 100%;
+		width: 100%;
 		height: 80%;
-    }
+	}
 
 	.hover-effect {
- 		height: 3%;
+		height: 3%;
 		width: 80%;
 		margin: 0 10% 5% 10%;
 		border-radius: 70px;
